@@ -131,6 +131,6 @@ function toggleTheme() {
 function setCategory(cat) {
   if (categories[cat]) {
     currentCategory = cat;
-    document.getElementById("predictionBox").innerHTML = `🔮 Category set to <strong>${cat}</strong>. Ask again.`;
+    document.getElementById("predictionBox").innerHTML = `🔮 Category set to <strong>${cat}</strong>.`;
   }
 }
