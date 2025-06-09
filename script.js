@@ -1,5 +1,5 @@
 const categories = {
-  love: {
+  Love: {
     starters: [
       "The stars whisper of love:", "A heart beats in the shadows:",
       "The universe stirs your emotions:", "In matters of the heart:"
@@ -17,7 +17,7 @@ const categories = {
       "Do not chase—allow.", "Love finds those who wait."
     ]
   },
-  career: {
+  Career: {
     starters: [
       "The stars point to your ambition:", "DreamWeaver sees your purpose:",
       "Opportunity knocks quietly:", "In your path of work:"
@@ -35,7 +35,7 @@ const categories = {
       "Growth is uncomfortable—keep going.", "You are ready for this."
     ]
   },
-  destiny: {
+  Destiny: {
     starters: [
       "The fabric of fate shifts:", "A pattern emerges:",
       "You are aligned with a greater story:", "In the threads of time:"
@@ -53,7 +53,7 @@ const categories = {
       "You were never lost.", "Let go. Flow forward."
     ]
   },
-  warning: {
+  Warning: {
     starters: [
       "A shadow passes over:", "The energy dims:",
       "Caution hums through the air:", "A quiet storm brews:"
