@@ -1,3 +1,5 @@
+// script.js
+
 const categories = {
   Love: {
     starters: [
@@ -73,9 +75,13 @@ const categories = {
   }
 };
 
-let currentCategory = "destiny";
+// Start with no selected category
+let currentCategory = "";
 
 function getSmartPrediction() {
+  if (!categories[currentCategory]) {
+    return null; // invalid or unset category
+  }
   const cat = categories[currentCategory];
   const r = arr => arr[Math.floor(Math.random() * arr.length)];
   return `${r(cat.starters)} ${r(cat.verbs)} ${r(cat.nouns)}. ${r(cat.closers)}`;
@@ -87,6 +93,10 @@ function predict() {
 
   if (input === '') {
     box.innerHTML = "🔁 Ask a real question, seeker of fate.";
+    return;
+  }
+  if (!categories[currentCategory]) {
+    box.innerHTML = "⚠️ Please select a category first!";
     return;
   }
 
@@ -114,7 +124,6 @@ function typeText(text, element) {
 function toggleTheme() {
   const body = document.body;
   const btn = document.getElementById('themeToggleBtn');
-
   const isDark = body.classList.contains('dark-mode');
   body.classList.toggle('dark-mode');
   body.classList.toggle('light-mode');
@@ -129,8 +138,19 @@ function toggleTheme() {
 }
 
 function setCategory(cat) {
+  // Remove highlight from all category buttons
+  document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('active'));
+  // Highlight the selected button
+  const idx = ["Love", "Career", "Destiny", "Warning"].indexOf(cat);
+  if (idx !== -1) {
+    document.querySelectorAll('.btn-group .btn')[idx].classList.add('active');
+  }
+
   if (categories[cat]) {
     currentCategory = cat;
     document.getElementById("predictionBox").innerHTML = `🔮 Category set to <strong>${cat}</strong>.`;
+  } else {
+    currentCategory = "";
+    document.getElementById("predictionBox").innerHTML = "⚠️ No category selected.";
   }
 }
