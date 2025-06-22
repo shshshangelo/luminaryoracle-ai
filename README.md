@@ -1,6 +1,6 @@
-# 🔮 DreamWeaver AI
+# 🔮 Luminary Oracle
 
-A mystical AI oracle that provides poetic predictions using Google's Gemini AI. Built with Node.js, Express, and a beautiful frontend interface.
+A mystical AI oracle that illuminates your path with wisdom from the stars, powered by Google's Gemini AI. Built with Node.js, Express, and a beautiful frontend interface.
 
 🪄 Live Site: [https://dreamweaver-ai-khaki.vercel.app/](https://dreamweaver-ai-khaki.vercel.app/)
 
@@ -10,7 +10,6 @@ A mystical AI oracle that provides poetic predictions using Google's Gemini AI. 
 
 - **Mystical Predictions**: Get poetic, mysterious insights for Love, Career, Destiny, and Warnings
 - **Gemini AI Integration**: Powered by Google's Gemini AI for intelligent, contextual responses
-- **Fallback System**: Template-based predictions when Gemini is unavailable
 - **Beautiful UI**: Dark/light theme toggle with animated stars background
 - **Category Selection**: Choose from Love ❤️, Career 💼, Destiny 🔮, or Warning ⚠️
 - **Typewriter Effect**: Predictions appear with a mystical typing animation
@@ -35,7 +34,7 @@ A mystical AI oracle that provides poetic predictions using Google's Gemini AI. 
 1. **Clone or download the project**
    ```bash
    git clone <repository-url>
-   cd dreamweaver-ai
+   cd luminary-oracle
    ```
 
 2. **Install dependencies**
@@ -89,8 +88,7 @@ const response = await fetch('/api/predict', {
   },
   body: JSON.stringify({
     question: "Will I find love this year?",
-    category: "Love",
-    useGemini: true
+    category: "Love"
   })
 });
 
@@ -105,21 +103,12 @@ console.log(data.prediction);
 - `GEMINI_API_KEY` - Your Google Gemini API key (required for AI predictions)
 - `PORT` - Server port (default: 3000)
 
-### Customization
-
-You can modify the prediction templates in `server.js` by editing the `categories` object. Each category has:
-- `starters` - Opening phrases
-- `verbs` - Action words
-- `nouns` - Subject words
-- `closers` - Closing statements
-
 ## 🌟 How It Works
 
 1. **User Input**: User asks a question and selects a category
 2. **API Processing**: Request sent to Express backend
 3. **Gemini AI**: Question processed by Google's Gemini AI with mystical prompts
-4. **Fallback**: If Gemini fails, uses template-based predictions
-5. **Response**: Mystical prediction returned with typewriter effect
+4. **Response**: Mystical prediction returned with typewriter effect
 
 ## 🎨 Customization
 
@@ -130,8 +119,7 @@ You can modify the prediction templates in `server.js` by editing the `categorie
 
 ### Prediction Style
 - Edit the Gemini prompt in `server.js` to change the AI's personality
-- Modify template categories for different prediction styles
-- Add new categories by extending the `categories` object
+- The oracle maintains a mystical, seer-like persona
 
 ## 🚀 Deployment
 

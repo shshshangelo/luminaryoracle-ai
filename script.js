@@ -19,7 +19,7 @@ async function predict() {
     return;
   }
 
-  box.innerHTML = `<em>✨ DreamWeaver is thinking...</em>`;
+  box.innerHTML = `<em>✨ Luminary Oracle is thinking...</em>`;
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/predict`, {
@@ -29,8 +29,7 @@ async function predict() {
       },
       body: JSON.stringify({
         question: input,
-        category: currentCategory,
-        useGemini: true // Set to false to use template system only
+        category: currentCategory
       })
     });
 
