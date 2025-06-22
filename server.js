@@ -17,7 +17,12 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // Generate prediction using Gemini AI
 async function generateGeminiPrediction(question, category) {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    console.log('🔮 Attempting to generate prediction...');
+    console.log('📝 Question:', question);
+    console.log('🏷️ Category:', category);
+    console.log('🔑 API Key present:', !!process.env.GEMINI_API_KEY);
+    
+    const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash" });
     
     const prompt = `You are Luminary Oracle, a mystical seer. The user asked: "${question}" in the ${category} category.
 
@@ -29,11 +34,17 @@ Give a direct, mystical prediction that specifically addresses their question. K
 
 Don't give generic advice - make it feel like you're reading their specific situation.`;
 
+    console.log('📤 Sending request to Gemini API...');
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    return response.text();
+    const prediction = response.text();
+    console.log('✅ Prediction generated successfully');
+    return prediction;
   } catch (error) {
-    console.error('Gemini API Error:', error);
+    console.error('❌ Gemini API Error Details:', error);
+    console.error('❌ Error message:', error.message);
+    console.error('❌ Error code:', error.code);
+    console.error('❌ Error status:', error.status);
     return null;
   }
 }
@@ -88,6 +99,15 @@ app.get('/api/categories', (req, res) => {
     categories: ["Love", "Career", "Destiny", "Warning"],
     description: 'Available mystical categories for Luminary Oracle'
   });
+});
+
+app.get('/api/models', async (req, res) => {
+  try {
+    const models = await genAI.listModels();
+    res.json(models);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Serve the main HTML file
