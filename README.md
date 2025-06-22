@@ -2,7 +2,7 @@
 
 A mystical AI oracle that illuminates your path with wisdom from the stars, powered by Google's Gemini AI. Built with Node.js, Express, and a beautiful frontend interface.
 
-🪄 Live Site: [https://dreamweaver-ai-khaki.vercel.app/](https://dreamweaver-ai-khaki.vercel.app/)
+🪄 Live Site: [https://luminaryoracle-ai.vercel.app/](https://luminaryoracle-ai.vercel.app/)
 
 ---
 
@@ -18,7 +18,7 @@ A mystical AI oracle that illuminates your path with wisdom from the stars, powe
 
 ## 📸 Screenshot
 
-![DreamWeaver AI Screenshot](assets/images/screenshot.png)
+![DreamWeaver AI Screenshot](assets/images/luminary_oracle.png)
 
 ---
 
