@@ -1,93 +1,12 @@
-// script.js
-
-const categories = {
-  Love: {
-    starters: [
-      "The stars whisper of love:", "A heart beats in the shadows:",
-      "The universe stirs your emotions:", "In matters of the heart:"
-    ],
-    verbs: [
-      "you will reconnect with", "you may lose", "you must trust",
-      "you are being drawn to", "you will heal through"
-    ],
-    nouns: [
-      "a quiet love", "an old flame", "a soulmate", "a tender goodbye",
-      "an unexpected affection", "emotional growth"
-    ],
-    closers: [
-      "Open your heart.", "This was meant to happen.",
-      "Do not chase—allow.", "Love finds those who wait."
-    ]
-  },
-  Career: {
-    starters: [
-      "The stars point to your ambition:", "DreamWeaver sees your purpose:",
-      "Opportunity knocks quietly:", "In your path of work:"
-    ],
-    verbs: [
-      "you will earn", "you must question", "you are close to",
-      "you will overcome", "you should follow"
-    ],
-    nouns: [
-      "a new offer", "financial clarity", "your next breakthrough",
-      "a decision of value", "a test of patience"
-    ],
-    closers: [
-      "Let your work speak.", "Delay is not denial.",
-      "Growth is uncomfortable—keep going.", "You are ready for this."
-    ]
-  },
-  Destiny: {
-    starters: [
-      "The fabric of fate shifts:", "A pattern emerges:",
-      "You are aligned with a greater story:", "In the threads of time:"
-    ],
-    verbs: [
-      "you will realize", "you are pulled toward", "you must accept",
-      "you will shed", "you will awaken to"
-    ],
-    nouns: [
-      "your next chapter", "a higher calling", "something ancient within you",
-      "your deepest truth", "a mirror moment"
-    ],
-    closers: [
-      "This is your time.", "The shift begins with you.",
-      "You were never lost.", "Let go. Flow forward."
-    ]
-  },
-  Warning: {
-    starters: [
-      "A shadow passes over:", "The energy dims:",
-      "Caution hums through the air:", "A quiet storm brews:"
-    ],
-    verbs: [
-      "you must be careful of", "you should stay away from",
-      "you will be tested by", "you may lose yourself in", "you are ignoring"
-    ],
-    nouns: [
-      "a false light", "a tempting path", "someone untrue",
-      "emotional fog", "a repeating cycle"
-    ],
-    closers: [
-      "Slow down.", "Don’t ignore the patterns.",
-      "Protect your energy.", "Not everything is for you."
-    ]
-  }
-};
+// script.js - Gemini API integration (categories removed)
 
 // Start with no selected category
 let currentCategory = "";
 
-function getSmartPrediction() {
-  if (!categories[currentCategory]) {
-    return null; // invalid or unset category
-  }
-  const cat = categories[currentCategory];
-  const r = arr => arr[Math.floor(Math.random() * arr.length)];
-  return `${r(cat.starters)} ${r(cat.verbs)} ${r(cat.nouns)}. ${r(cat.closers)}`;
-}
+// API configuration
+const API_BASE_URL = window.location.origin; // Use same origin for API calls
 
-function predict() {
+async function predict() {
   const input = document.getElementById('userInput').value.trim();
   const box = document.getElementById('predictionBox');
 
@@ -95,17 +14,44 @@ function predict() {
     box.innerHTML = "🔁 Ask a real question, seeker of fate.";
     return;
   }
-  if (!categories[currentCategory]) {
+  if (!currentCategory) {
     box.innerHTML = "⚠️ Please select a category first!";
     return;
   }
 
   box.innerHTML = `<em>✨ DreamWeaver is thinking...</em>`;
 
-  setTimeout(() => {
-    const response = getSmartPrediction();
-    typeText(response, box);
-  }, 1000);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/predict`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        question: input,
+        category: currentCategory,
+        useGemini: true // Set to false to use template system only
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    if (data.error) {
+      box.innerHTML = `⚠️ ${data.error}`;
+      return;
+    }
+
+    // Type out the prediction
+    typeText(data.prediction, box);
+
+  } catch (error) {
+    console.error('API Error:', error);
+    box.innerHTML = "🔮 The mystical forces are disturbed. Please try again.";
+  }
 }
 
 function typeText(text, element) {
@@ -146,7 +92,8 @@ function setCategory(cat) {
     document.querySelectorAll('.btn-group .btn')[idx].classList.add('active');
   }
 
-  if (categories[cat]) {
+  const validCategories = ["Love", "Career", "Destiny", "Warning"];
+  if (validCategories.includes(cat)) {
     currentCategory = cat;
     document.getElementById("predictionBox").innerHTML = `🔮 Category set to <strong>${cat}</strong>.`;
   } else {
@@ -154,3 +101,22 @@ function setCategory(cat) {
     document.getElementById("predictionBox").innerHTML = "⚠️ No category selected.";
   }
 }
+
+// Check API health on page load
+async function checkAPIHealth() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/health`);
+    if (response.ok) {
+      console.log('✨ DreamWeaver AI API is connected');
+    } else {
+      console.warn('⚠️ API health check failed');
+    }
+  } catch (error) {
+    console.warn('⚠️ Could not connect to API:', error);
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  checkAPIHealth();
+});
