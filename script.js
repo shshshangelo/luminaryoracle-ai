@@ -217,7 +217,7 @@ async function checkAPIHealth() {
   try {
     const response = await fetch(`${API_BASE_URL}/api/health`);
     if (response.ok) {
-      console.log('✨ DreamWeaver AI API is connected');
+      console.log('✨ Luminary Oracle API is connected');
     } else {
       console.warn('⚠️ API health check failed');
     }

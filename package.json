@@ -4,7 +4,7 @@
   "description": "Luminary Oracle - A mystical AI oracle powered by Google Gemini",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "echo 'No local server. Use Vercel for deployment.'",
     "dev": "nodemon server.js"
   },
   "dependencies": {
